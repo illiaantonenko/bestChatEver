@@ -17,3 +17,5 @@ lerna-debug.log*
 # Tests
 /coverage
 /.nyc_output
+
+/package-lock.json
