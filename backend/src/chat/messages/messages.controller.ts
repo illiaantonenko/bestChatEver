@@ -1,10 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { IMessage } from './interfaces/message.interface';
+// import { IMessage } from '../../../../common/message.interface';
 
 @Controller('messages')
 export class MessagesController {
   @Post('create')
-  create(@Body() body: string): IMessage {
+  create(@Body() body: string): object {
     return {
       id: new Date().toISOString(),
       body: body,
