@@ -1,0 +1,31 @@
+.h1 {
+  font-size: 3rem;
+}
+.h2 {
+  font-size: 2.5rem;
+}
+.h3 {
+  font-size: 2.25rem;
+}
+.h4 {
+  font-size: 2rem;
+}
+.h5 {
+  font-size: 1.75rem;
+}
+
+.xl {
+  font-size: 1.75rem;
+}
+.l {
+  font-size: 1.5rem;
+}
+.m {
+  font-size: 1rem;
+}
+.s {
+  font-size: 0.875rem;
+}
+.xs {
+  font-size: 0.75rem;
+}
