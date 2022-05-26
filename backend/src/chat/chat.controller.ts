@@ -1,21 +1,19 @@
-import { Controller, Get } from '@nestjs/common';
-// import { IMessage } from '../../../common/message.interface';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { ChatService } from './chat.service';
+import { CreateMessageDto } from './messages/dto/message.dto';
+import { MessageEntity } from './messages/message.entity';
 
 @Controller('chat')
 export class ChatController {
+  constructor(private readonly chatService: ChatService) {}
+
   @Get()
-  room(): object[] {
-    return [
-      {
-        id: '1',
-        body: 'hello',
-        created_at: new Date(new Date().getTime() - 60000).toTimeString(),
-      },
-      {
-        id: '2',
-        body: 'how are you?',
-        created_at: new Date().toTimeString(),
-      },
-    ];
+  async room(): Promise<MessageEntity[]> {
+    return this.chatService.findAll();
+  }
+
+  @Post()
+  async sendMessage(@Body() createMessageDto: CreateMessageDto) {
+    return this.chatService.createMessage(createMessageDto);
   }
 }
