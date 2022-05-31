@@ -3,10 +3,8 @@ import classNames from 'classnames';
 
 import s from './Typography.module.css'
 
-const headersType = ['h1', 'h2', 'h3', 'h4', 'h5'] as const
-
 export interface ITypography {
-  size: typeof headersType[number] | 'xl' | 'l' | 'm' | 's' | 'xs';
+  size: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'xl' | 'l' | 'm' | 's' | 'xs';
   children?: React.ReactNode;
   className?: string;
 }
