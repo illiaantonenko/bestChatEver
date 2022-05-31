@@ -31,7 +31,5 @@ export const Typography: React.FC<ITypography> = ({ size = 'm', children, classN
 
   // Apply styles
 
-  console.log(s)
-
   return <Tag children={children} className={classNames(className, (s as unknown as Record<ITypography['size'],string>)[size])} {...otherProps} />;
 }
