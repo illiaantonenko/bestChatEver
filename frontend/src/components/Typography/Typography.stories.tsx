@@ -16,49 +16,49 @@ export default {
  * All typographies sotry
  */
 
-const TemplateAll: Story<{}> = (args) => {
+const TemplateAll: Story<{ content: string }> = ({ content }) => {
   return (
     <div>
       <div>
         <Typography size="xs">H1</Typography>
         <Typography size="h1">
-          {SHORT_TEXT_SAMPLE}
+          {content}
         </Typography>
         <Typography size="xs">H2</Typography>
         <Typography size="h2">
-          {SHORT_TEXT_SAMPLE}
+          {content}
         </Typography>
         <Typography size="xs">H3</Typography>
         <Typography size="h3">
-          {SHORT_TEXT_SAMPLE}
+          {content}
         </Typography>
         <Typography size="xs">H4</Typography>
         <Typography size="h4">
-          {SHORT_TEXT_SAMPLE}
+          {content}
         </Typography>
         <Typography size="xs">H5</Typography>
         <Typography size="h5">
-          {SHORT_TEXT_SAMPLE}
+          {content}
         </Typography>
         <Typography size="xs">XL</Typography>
         <Typography size="xl">
-          {SHORT_TEXT_SAMPLE}
+          {content}
         </Typography>
         <Typography size="xs">L</Typography>
         <Typography size="l">
-          {SHORT_TEXT_SAMPLE}
+          {content}
         </Typography>
         <Typography size="xs">M</Typography>
         <Typography size="m">
-          {SHORT_TEXT_SAMPLE}
+          {content}
         </Typography>
         <Typography size="xs">S</Typography>
         <Typography size="s">
-          {SHORT_TEXT_SAMPLE}
+          {content}
         </Typography>
         <Typography size="xs">XS</Typography>
         <Typography size="xs">
-          {SHORT_TEXT_SAMPLE}
+          {content}
         </Typography>
       </div>
     </div>
@@ -66,6 +66,9 @@ const TemplateAll: Story<{}> = (args) => {
 }
 
 export const AllTypography = TemplateAll.bind({});
+AllTypography.args = {
+  content: SHORT_TEXT_SAMPLE,
+}
 
 /**
  * Single typography stories
