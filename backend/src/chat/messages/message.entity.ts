@@ -1,7 +1,8 @@
-import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
+import { Column, Entity, ObjectID, ObjectIdColumn, OneToOne } from 'typeorm';
+import { Chat } from '../chat.entity';
 
 @Entity()
-export class MessageEntity {
+export class Message {
   @ObjectIdColumn()
   _id: ObjectID;
 
@@ -10,4 +11,7 @@ export class MessageEntity {
 
   @Column()
   created_at: string;
+
+  @OneToOne(() => Chat)
+  chat: Chat;
 }
