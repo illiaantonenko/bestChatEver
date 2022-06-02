@@ -1,0 +1,29 @@
+:root {
+  --black: #111111;
+  --black-t1: #333333;
+  --black-t2: #555555;
+
+  --grey: #666666;
+  --grey-t1: #878787;
+  --grey-t2: #A1A1A1;
+
+  --ash: #B9B9B9;
+  --ash-t1: #C4C4C4;
+  --ash-t2: #CECECE;
+
+  --white: #E6E6E6;
+  --white-t1: #F2F2F2;
+  --white-t2: #FFFFFF;
+
+  --sky: #94A6B3;
+  --sky-t1: #9FB3BF;
+  --sky-t2: #A9BFC9;
+
+  --cream: #DBD2C6;
+  --cream: #E5DCD1;
+  --cream: #EFE6DC;
+
+  --state-success: #79D2A6;
+  --state-warn: #E0AC85;
+  --state-error: #D96868;
+}
