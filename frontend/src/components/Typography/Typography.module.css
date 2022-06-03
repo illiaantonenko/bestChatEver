@@ -1,31 +1,91 @@
+/* Header styles */
 .h1 {
-  font-size: 3rem;
+  font-size: 3.625rem;
+  font-weight: 300;
+
+  color: var(--black);
 }
 .h2 {
-  font-size: 2.5rem;
+  font-size: 2.875rem;
+  font-weight: 300;
+
+  color: var(--black);
 }
 .h3 {
-  font-size: 2.25rem;
+  font-size: 2.5625rem;
+  font-weight: 300;
+
+  color: var(--black);
 }
 .h4 {
-  font-size: 2rem;
+  font-size: 2.25rem;
+  font-weight: 300;
+
+  color: var(--black);
 }
 .h5 {
-  font-size: 1.75rem;
+  font-size: 1.8125rem;
+  font-weight: 300;
+
+  color: var(--black);
+}
+.h6 {
+  font-size: 1.5rem;
+  font-weight: 300;
+
+  color: var(--black);
 }
 
-.xl {
-  font-size: 1.75rem;
+/* Body text styles */
+.s1 {
+  font-size: 1.125rem;
+  font-weight: 500;
+
+  color: var(--black);
 }
-.l {
-  font-size: 1.5rem;
-}
-.m {
+.s2 {
   font-size: 1rem;
+  font-weight: 500;
+
+  color: var(--black);
 }
-.s {
+.b1 {
+  font-size: 1rem;
+  font-weight: 400;
+
+  color: var(--black);
+}
+.b2 {
   font-size: 0.875rem;
+  font-weight: 400;
+
+  color: var(--black);
 }
-.xs {
+.c1 {
+  font-size: 0.875rem;
+  font-weight: 500;
+
+  color: var(--black-t2);
+}
+.c2 {
   font-size: 0.75rem;
+  font-weight: 500;
+
+  color: var(--black-t2);
+}
+.button {
+  font-size: 0.875rem;
+  font-weight: 400;
+
+  text-transform: uppercase;
+
+  color: var(--black);
+}
+.overline {
+  font-size: 0.75rem;
+  font-weight: 400;
+
+  text-transform: uppercase;
+
+  color: var(--black);
 }

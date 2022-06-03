@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import './styles/variables.css';
+import './styles/global.css';
 import { Typography } from './components/Typography';
 
 function App() {
@@ -19,7 +21,7 @@ function App() {
         >
           Learn React
         </a>
-        <Typography size='m'>
+        <Typography size='b1'>
           Random <b>text</b>
         </Typography>
       </header>
