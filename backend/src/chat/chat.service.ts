@@ -1,29 +1,29 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Chat } from './chat.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Chat, ChatDocument } from './chat.schema';
 
 @Injectable()
 export class ChatService {
   constructor(
-    @InjectRepository(Chat)
-    private chatRepository: Repository<Chat>,
+    @InjectModel(Chat.name)
+    private chatModel: Model<ChatDocument>,
   ) {}
 
   findAll(): Promise<Chat[]> {
-    return this.chatRepository.find();
+    return this.chatModel.find().exec();
   }
 
   findOne(id: string): Promise<Chat> {
-    return this.chatRepository.findOne(id);
+    return this.chatModel.findOne({ id: id }).exec();
   }
 
   async createRoom(): Promise<Chat> {
-    const chat = new Chat();
-    return this.chatRepository.save(chat);
+    const createChat = new this.chatModel();
+    return createChat.save();
   }
 
   async remove(id: string): Promise<void> {
-    await this.chatRepository.delete(id);
+    await this.chatModel.deleteOne({ id: id });
   }
 }

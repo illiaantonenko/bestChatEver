@@ -1,38 +1,40 @@
 import { Injectable } from '@nestjs/common';
-import { Message } from './message.entity';
+import { Message, MessageDocument } from './message.schema';
 import { CreateMessageDto } from './dto/message.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Chat } from '../chat.entity';
+import { Chat, ChatDocument } from '../chat.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class MessageService {
   constructor(
-    @InjectRepository(Message)
-    private messageRepository: Repository<Message>,
+    @InjectModel(Message.name)
+    private messageModel: Model<MessageDocument>,
   ) {}
 
   findAll(): Promise<Message[]> {
     //TODO relations not working
-    return this.messageRepository.find();
+    return this.messageModel.find().populate('chat').exec();
   }
 
   findOne(id: string): Promise<Message> {
-    return this.messageRepository.findOne(id);
+    return this.messageModel.findOne({ id: id }).exec();
   }
 
   createMessage(
     createMessageDto: CreateMessageDto,
-    chat: Chat,
+    chat: ChatDocument,
   ): Promise<Message> {
-    const message = new Message();
-    message.body = createMessageDto.body;
-    message.created_at = new Date().toISOString();
-    message.chat = chat;
-    return this.messageRepository.save(message);
+    const createMessage = new this.messageModel({
+      ...createMessageDto,
+      created_at: new Date().toISOString(),
+    });
+    // createMessage.created_at = new Date().toISOString();
+    createMessage.chat = chat._id;
+    return createMessage.save();
   }
 
   async remove(id: string): Promise<void> {
-    await this.messageRepository.delete(id);
+    await this.messageModel.deleteOne({ id: id });
   }
 }
