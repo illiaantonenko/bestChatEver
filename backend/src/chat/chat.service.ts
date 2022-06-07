@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { Chat, ChatDocument } from './chat.schema';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class ChatService {
     return this.chatModel.find().exec();
   }
 
-  findOne(id: string): Promise<Chat> {
+  findOne(id: ObjectId): Promise<Chat> {
     return this.chatModel.findOne({ id: id }).exec();
   }
 
@@ -23,7 +23,7 @@ export class ChatService {
     return createChat.save();
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: ObjectId): Promise<void> {
     await this.chatModel.deleteOne({ id: id });
   }
 }
