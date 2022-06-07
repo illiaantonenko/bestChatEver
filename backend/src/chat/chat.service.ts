@@ -11,16 +11,17 @@ export class ChatService {
   ) {}
 
   findAll(): Promise<Chat[]> {
-    return this.chatModel.find().exec();
+    return this.chatModel.find().populate('partisipants').exec();
   }
 
   findOne(id: ObjectId): Promise<Chat> {
     return this.chatModel.findOne({ id: id }).exec();
   }
 
-  async createRoom(): Promise<Chat> {
-    const createChat = new this.chatModel();
-    return createChat.save();
+  createRoom(partisipants: ObjectId[]): Promise<Chat> {
+    return new this.chatModel({
+      partisipants: partisipants,
+    }).save();
   }
 
   async remove(id: ObjectId): Promise<void> {

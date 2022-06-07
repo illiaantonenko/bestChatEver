@@ -23,16 +23,16 @@ export class ChatController {
     return await this.messageService.findAllInChat(id);
   }
 
+  @Post('create')
+  async createRoom(@Body() partisipants: ObjectId[]) {
+    return this.chatService.createRoom(partisipants);
+  }
+
   @Post(':id')
   async sendMessage(
     @Param('id') chatId: ObjectId,
     @Body() createMessageDto: CreateMessageDto,
   ) {
     return this.messageService.createMessage(createMessageDto, chatId);
-  }
-
-  @Post('create')
-  async createRoom() {
-    return this.chatService.createRoom();
   }
 }
