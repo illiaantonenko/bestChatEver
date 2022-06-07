@@ -9,23 +9,23 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  allUsers(): Promise<User[]> {
+  userList(): Promise<User[]> {
     return this.userService.findAll();
   }
 
   @Get(':id')
-  getUser(@Param('id') id: ObjectId): Promise<User> {
+  user(@Param('id') id: ObjectId): Promise<User> {
     return this.userService.findOne(id);
   }
 
   @Post()
-  createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return this.userService.createUser(createUserDto);
+  insert(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return this.userService.create(createUserDto);
   }
 
   @Delete(':id')
-  deleteUser(@Param('id') id: ObjectId): string {
-    if (this.userService.remove(id)) {
+  remove(@Param('id') id: ObjectId): string {
+    if (this.userService.delete(id)) {
       return 'success';
     }
     return 'error';

@@ -4,4 +4,6 @@ export class CreateMessageDto {
   body: string;
 
   author: ObjectId;
+
+  chat: ObjectId;
 }

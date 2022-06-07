@@ -18,13 +18,13 @@ export class ChatService {
     return this.chatModel.findOne({ id: id }).exec();
   }
 
-  createRoom(partisipants: ObjectId[]): Promise<Chat> {
+  create(partisipants: ObjectId[]): Promise<Chat> {
     return new this.chatModel({
       partisipants: partisipants,
     }).save();
   }
 
-  async remove(id: ObjectId): Promise<void> {
+  async delete(id: ObjectId): Promise<void> {
     await this.chatModel.deleteOne({ id: id });
   }
 }

@@ -19,19 +19,13 @@ export class MessageService {
     return this.messageModel.findOne({ id: id }).exec();
   }
 
-  createMessage(
-    createMessageDto: CreateMessageDto,
-    chatId: ObjectId,
-  ): Promise<Message> {
-    const createMessage = new this.messageModel({
-      ...createMessageDto,
-      chat: chatId,
-    });
+  create(createMessageDto: CreateMessageDto): Promise<Message> {
+    const createMessage = new this.messageModel(createMessageDto);
 
     return createMessage.save();
   }
 
-  async remove(id: ObjectId): Promise<void> {
+  async delete(id: ObjectId): Promise<void> {
     await this.messageModel.deleteOne({ id: id });
   }
 }

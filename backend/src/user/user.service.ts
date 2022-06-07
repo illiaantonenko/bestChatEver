@@ -19,16 +19,16 @@ export class UserService {
     return this.userModel.findOne({ id: id }).exec();
   }
 
-  createUser(createUserDto: CreateUserDto): Promise<User> {
+  create(createUserDto: CreateUserDto): Promise<User> {
     const createUser = new this.userModel(createUserDto);
     return createUser.save();
   }
 
-  updateUser() {
+  update() {
     // TODO implement update user
   }
 
-  async remove(id: ObjectId): Promise<void> {
+  async delete(id: ObjectId): Promise<void> {
     await this.userModel.deleteOne({ id: id }).exec();
   }
 }

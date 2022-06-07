@@ -25,14 +25,11 @@ export class ChatController {
 
   @Post('create')
   async createRoom(@Body() partisipants: ObjectId[]) {
-    return this.chatService.createRoom(partisipants);
+    return this.chatService.create(partisipants);
   }
 
-  @Post(':id')
-  async sendMessage(
-    @Param('id') chatId: ObjectId,
-    @Body() createMessageDto: CreateMessageDto,
-  ) {
-    return this.messageService.createMessage(createMessageDto, chatId);
+  @Post('send')
+  async sendMessage(@Body() createMessageDto: CreateMessageDto) {
+    return this.messageService.create(createMessageDto);
   }
 }
