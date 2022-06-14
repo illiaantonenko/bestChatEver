@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model, ObjectId } from 'mongoose';
 import { SignUpLocalDto } from '../auth/dto/signUpLocal.dto';
 import { User, UserDocument } from './user.schema';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -37,7 +38,8 @@ export class UserService {
     return user;
   }
 
-  create(signUpUserDto: SignUpLocalDto): Promise<User> {
+  async create(signUpUserDto: SignUpLocalDto): Promise<User> {
+    signUpUserDto.password = await this.createPassword(signUpUserDto.password);
     const createUser = new this.userModel(signUpUserDto);
     return createUser.save();
   }
@@ -48,5 +50,13 @@ export class UserService {
 
   async delete(id: ObjectId): Promise<void> {
     await this.userModel.deleteOne({ id: id }).exec();
+  }
+
+  async createPassword(password: string, saltOrRounds = 16): Promise<string> {
+    return await bcrypt.hash(password, saltOrRounds);
+  }
+
+  async isPasswordMatch(passwort: string, hash: string): Promise<boolean> {
+    return await bcrypt.compare(passwort, hash);
   }
 }
