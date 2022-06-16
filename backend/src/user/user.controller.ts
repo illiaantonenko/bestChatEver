@@ -1,5 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { FilterQuery, ObjectId } from 'mongoose';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { SignUpLocalDto } from '../auth/dto/signUpLocal.dto';
 import { User } from './user.schema';
 import { UserService } from './user.service';
@@ -13,6 +22,7 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   user(@Param('id') id: ObjectId): Promise<User> {
     return this.userService.findOne({ id });
