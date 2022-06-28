@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { FilterQuery, ObjectId } from 'mongoose';
@@ -26,6 +27,12 @@ export class UserController {
   @Get(':id')
   user(@Param('id') id: ObjectId): Promise<User> {
     return this.userService.findOne({ id });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getAuthUser(@Request() req): Promise<User> {
+    return req.user;
   }
 
   @Get('query')
