@@ -22,7 +22,12 @@ export class AuthService {
       );
     }
 
-    if (!this.userService.isPasswordMatch(signInDto.password, user.password)) {
+    if (
+      !(await this.userService.isPasswordMatch(
+        signInDto.password,
+        user.password,
+      ))
+    ) {
       throw new UnauthorizedException(
         `Wrong password for user with email: ${signInDto.email}`,
       );
