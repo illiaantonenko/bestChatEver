@@ -27,7 +27,7 @@ export class UserService {
     return userList;
   }
 
-  async findOne(where: FilterQuery<UserDocument>): Promise<User> {
+  async findOne(where: FilterQuery<UserDocument>): Promise<UserDocument> {
     const user = await this.userModel.findOne(where).exec();
 
     if (!user) {
@@ -38,7 +38,7 @@ export class UserService {
     return user;
   }
 
-  async create(signUpUserDto: SignUpLocalDto): Promise<User> {
+  async create(signUpUserDto: SignUpLocalDto): Promise<UserDocument> {
     signUpUserDto.password = await this.createPassword(signUpUserDto.password);
     const createUser = new this.userModel(signUpUserDto);
     return createUser.save();
