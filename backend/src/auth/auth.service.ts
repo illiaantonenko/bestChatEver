@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { User, UserDocument } from 'src/user/user.schema';
 import { UserService } from 'src/user/user.service';
 import { SignInLocalDto } from './dto/signIn.dto';
+import { SignUpLocalDto } from './dto/signUpLocal.dto';
 
 @Injectable()
 export class AuthService {
@@ -42,5 +43,10 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
     };
+  }
+
+  async register(signUpUserDto: SignUpLocalDto) {
+    const user = await this.userService.create(signUpUserDto);
+    return this.login(user);
   }
 }

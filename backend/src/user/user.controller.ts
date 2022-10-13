@@ -7,14 +7,17 @@ import {
   Post,
   Request,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { FilterQuery, ObjectId } from 'mongoose';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import MongooseClassSerializerInterceptor from 'src/utils/mongooseClassSerializer.interceptor';
 import { SignUpLocalDto } from '../auth/dto/signUpLocal.dto';
 import { User } from './user.schema';
 import { UserService } from './user.service';
 
 @Controller('user')
+@UseInterceptors(MongooseClassSerializerInterceptor(User))
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

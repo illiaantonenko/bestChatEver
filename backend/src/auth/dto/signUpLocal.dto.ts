@@ -9,11 +9,9 @@ export class SignUpLocalDto {
   @IsString()
   lastName: string;
 
-  @IsDefined()
   @IsEmail()
   email: string;
 
-  @IsDefined()
   @MinLength(8)
   password: string;
 }
