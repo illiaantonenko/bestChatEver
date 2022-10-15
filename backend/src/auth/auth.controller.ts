@@ -1,6 +1,7 @@
 import {
-  Controller,
-  Post,
+  Body,
+  Controller, Get,
+  Post, Query,
   Request,
   UseGuards,
   UseInterceptors,
@@ -23,7 +24,12 @@ export class AuthController {
   }
 
   @Post('register')
-  register(@Request() req: SignUpLocalDto) {
-    return this.authService.register(req);
+  register(@Body() signUpLocalDto: SignUpLocalDto) {
+    return this.authService.register(signUpLocalDto);
+  }
+
+  @Get('test')
+  test(@Query('email') email: string) {
+    return this.authService.test(email);
   }
 }

@@ -27,15 +27,15 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':id')
-  user(@Param('id') id: ObjectId): Promise<User> {
-    return this.userService.findOne({ id });
-  }
-
-  @UseGuards(JwtAuthGuard)
   @Get('profile')
   getAuthUser(@Request() req): Promise<User> {
     return req.user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  user(@Param('id') id: ObjectId): Promise<User> {
+    return this.userService.findOne({ id });
   }
 
   @Get('query')

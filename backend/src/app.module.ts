@@ -11,7 +11,8 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot(
-      `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.od4pt.mongodb.net/best-chat?retryWrites=true&w=majority`,
+        'mongodb://root:pass@localhost' // TODO: utilize config module OR load from process.env
+      // `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.od4pt.mongodb.net/best-chat?retryWrites=true&w=majority`,
     ),
     ChatModule,
     UserModule,

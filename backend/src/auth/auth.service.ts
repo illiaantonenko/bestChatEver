@@ -38,8 +38,9 @@ export class AuthService {
     return result;
   }
 
-  async login(user: UserDocument) {
-    const payload = { username: user.email, sub: user._id };
+  async login(user: User) {
+    const sub = user._id.toString()
+    const payload = { username: user.email, sub };
     return {
       access_token: this.jwtService.sign(payload),
     };
@@ -48,5 +49,10 @@ export class AuthService {
   async register(signUpUserDto: SignUpLocalDto) {
     const user = await this.userService.create(signUpUserDto);
     return this.login(user);
+  }
+
+  // TODO: remove after testing
+  async test(email: string){
+    return this.userService.findOne({ email })
   }
 }
