@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User, UserDocument } from 'src/user/user.schema';
+import { User } from 'src/user/user.schema';
 import { UserService } from 'src/user/user.service';
 import { SignInLocalDto } from './dto/signIn.dto';
 import { SignUpLocalDto } from './dto/signUpLocal.dto';
@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   async login(user: User) {
-    const sub = user._id.toString()
+    const sub = user._id.toString();
     const payload = { username: user.email, sub };
     return {
       access_token: this.jwtService.sign(payload),
@@ -49,10 +49,5 @@ export class AuthService {
   async register(signUpUserDto: SignUpLocalDto) {
     const user = await this.userService.create(signUpUserDto);
     return this.login(user);
-  }
-
-  // TODO: remove after testing
-  async test(email: string){
-    return this.userService.findOne({ email })
   }
 }

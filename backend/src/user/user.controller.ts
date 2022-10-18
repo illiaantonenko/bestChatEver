@@ -32,15 +32,15 @@ export class UserController {
     return req.user;
   }
 
+  @Get('query')
+  searchQuery(@Body() where: FilterQuery<User>): Promise<User> {
+    return this.userService.findOne(where);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get(':id')
   user(@Param('id') id: ObjectId): Promise<User> {
     return this.userService.findOne({ id });
-  }
-
-  @Get('query')
-  searchQuery(@Body() where: FilterQuery<User>): Promise<User> {
-    return this.userService.findOne(where);
   }
 
   @Post()
