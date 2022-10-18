@@ -38,7 +38,7 @@ export class UserService {
     return user;
   }
 
-  async create(signUpUserDto: SignUpLocalDto): Promise<UserDocument> {
+  async create(signUpUserDto: SignUpLocalDto): Promise<User> {
     signUpUserDto.password = await this.createPassword(signUpUserDto.password);
     const createUser = new this.userModel(signUpUserDto);
     return createUser.save();
