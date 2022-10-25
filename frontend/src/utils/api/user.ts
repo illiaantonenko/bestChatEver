@@ -2,22 +2,24 @@ import API from '../controllers/api';
 
 import { TYPES } from '../../core/system/user'
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const User = {
   signIn: new API<TYPES.IUserTokenResponse, TYPES.IUserAuthoriseRequest>(
     'POST',
-    `${process.env.API_URL}/auth/login`,
+    `${API_URL}/auth/login`,
     'application/json',
   ),
 
   signUp: new API<TYPES.IUserTokenResponse, TYPES.IUserCreateRequest>(
     'POST',
-    `${process.env.API_URL}/auth/register`,
+    `${API_URL}/auth/register`,
     'application/json',
   ),
 
   getCurrentUser: new API<TYPES.IUserSetAction['payload']>(
     'GET',
-    `${process.env.API_URL}/user/profile`,
+    `${API_URL}/user/profile`,
     'application/json',
   )
 }
