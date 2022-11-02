@@ -4,15 +4,18 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
-  Request,
+  Req,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { FilterQuery, ObjectId } from 'mongoose';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Request } from 'express';
+import { FilterQuery } from 'mongoose';
+import { AccessTokenGuard } from 'src/common/guards/accessToken.guard';
 import MongooseClassSerializerInterceptor from 'src/utils/mongooseClassSerializer.interceptor';
-import { SignUpLocalDto } from '../auth/dto/signUpLocal.dto';
+import { CreateUserDto } from './dto/createUser.dto';
+import { UpdateUserDto } from './dto/updateUser.dto';
 import { User } from './user.schema';
 import { UserService } from './user.service';
 
@@ -26,33 +29,42 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get(':id')
-  user(@Param('id') id: ObjectId): Promise<User> {
-    return this.userService.findOne({ id });
-  }
-
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AccessTokenGuard)
   @Get('profile')
-  getAuthUser(@Request() req): Promise<User> {
+  getAuthUser(@Req() req: Request) {
     return req.user;
   }
 
+  @UseGuards(AccessTokenGuard)
   @Get('query')
   searchQuery(@Body() where: FilterQuery<User>): Promise<User> {
     return this.userService.findOne(where);
   }
 
+  @UseGuards(AccessTokenGuard)
+  @Get(':id')
+  user(@Param('id') id: string): Promise<User> {
+    return this.userService.findById(id);
+  }
+
+  @UseGuards(AccessTokenGuard)
   @Post()
-  insert(@Body() createUserDto: SignUpLocalDto): Promise<User> {
+  insert(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.userService.create(createUserDto);
   }
 
+  @UseGuards(AccessTokenGuard)
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<User> {
+    return this.userService.update(id, updateUserDto);
+  }
+
+  @UseGuards(AccessTokenGuard)
   @Delete(':id')
-  remove(@Param('id') id: ObjectId): string {
-    if (this.userService.delete(id)) {
-      return 'success';
-    }
-    return 'error';
+  remove(@Param('id') id: string) {
+    return this.userService.delete(id);
   }
 }

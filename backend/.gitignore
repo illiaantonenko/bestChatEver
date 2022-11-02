@@ -19,4 +19,4 @@ lerna-debug.log*
 /.nyc_output
 
 /package-lock.json
-/.env
+/conf/.env

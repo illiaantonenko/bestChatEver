@@ -1,6 +1,6 @@
-import { IsDefined, IsEmail, IsString, MinLength } from 'class-validator';
+import { IsDefined, IsString, IsEmail, MinLength } from 'class-validator';
 
-export class SignUpLocalDto {
+export class CreateUserDto {
   @IsDefined()
   @IsString()
   firstName: string;
@@ -14,4 +14,6 @@ export class SignUpLocalDto {
 
   @MinLength(8)
   password: string;
+
+  refreshToken: string;
 }

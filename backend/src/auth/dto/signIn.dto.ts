@@ -1,6 +1,6 @@
 import { IsDefined, IsEmail, MinLength } from 'class-validator';
 
-export class SignInLocalDto {
+export class SignInDto {
   @IsDefined()
   @IsEmail()
   email: string;
