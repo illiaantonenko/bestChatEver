@@ -1,9 +1,11 @@
 import * as React from 'react';
 
 import { Props } from '../../../containers/auth';
-import { Typography } from '../../ui';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
 
 import * as css from './main.module.css';
+import { Typography } from '../../ui';
 
 interface IState {
   email: string;
@@ -21,40 +23,12 @@ class AuthPage extends React.Component<Props, IState> {
     // this.switchTabs = this.switchTabs.bind(this);
   }
 
-  onEmailChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    this.setState({ email: event.target.value })
-  }
-
-  onPasswordChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    this.setState({ password: event.target.value })
-  }
-
-  onSignInSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
-
-    const { signIn } = this.props;
-    const { email, password } = this.state;
-
-    signIn({ email, password })
-  }
-
   render() {
-    const { user } = this.props;
-    const { email, password } = this.state;
+    const { signIn, signUp, user } = this.props;
 
     return (
       <div>
-        <div>
-          <Typography size="b1">
-            Sign in form
-          </Typography>
-
-          <form onSubmit={this.onSignInSubmit}>
-            <input name="email" type="text" onChange={this.onEmailChange} value={email} />
-            <input name="password" type="password" onChange={this.onPasswordChange} value={password} />
-            <button type="submit">Submit</button>
-          </form>
-        </div>
+        {/* Meta */}
         <div>
           <Typography size="b2">
             User state:
@@ -62,6 +36,13 @@ class AuthPage extends React.Component<Props, IState> {
           <Typography size="c2">
             {JSON.stringify(user)}
           </Typography>
+        </div>
+        {/* Sign In */}
+        <SignIn onSubmit={signIn} />
+        {/* Sign Up */}
+        <SignUp onSubmit={signUp} />
+        <div>
+          
         </div>
       </div>
     );

@@ -16,7 +16,7 @@ export interface IFullUser extends IUser {
   _id: string;
 }
 
-export interface IUserState extends IFullUser, IUserTokenResponse {
+export interface IUserState extends IFullUser, Pick<IUserTokenResponse, 'accessToken'> {
   isFetching: boolean;
 }
 
@@ -29,7 +29,8 @@ export interface IUserAuthoriseRequest extends Pick<IUser, 'email'> {
 }
 
 export interface IUserTokenResponse {
-  access_token: string;
+  accessToken: string;
+  refreshToken: string;
 }
 
 /**
