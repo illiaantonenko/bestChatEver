@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import './styles/variables.css';
 import './styles/global.css';
-import { Typography } from './components/Typography';
+import { Typography } from './components/ui/Typography';
 
 function App() {
   return (
