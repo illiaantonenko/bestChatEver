@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { Props } from '../../../containers/auth';
 import { Typography } from '../../ui';
+import { SignIn, SignUp } from '../../views'
 
 import * as css from './main.module.css';
 
@@ -21,40 +22,13 @@ class AuthPage extends React.Component<Props, IState> {
     // this.switchTabs = this.switchTabs.bind(this);
   }
 
-  onEmailChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    this.setState({ email: event.target.value })
-  }
-
-  onPasswordChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    this.setState({ password: event.target.value })
-  }
-
-  onSignInSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
-
-    const { signIn } = this.props;
-    const { email, password } = this.state;
-
-    signIn({ email, password })
-  }
-
   render() {
-    const { user } = this.props;
-    const { email, password } = this.state;
+    const { user, signIn, signUp } = this.props;
 
     return (
       <div>
-        <div>
-          <Typography size="b1">
-            Sign in form
-          </Typography>
-
-          <form onSubmit={this.onSignInSubmit}>
-            <input name="email" type="text" onChange={this.onEmailChange} value={email} />
-            <input name="password" type="password" onChange={this.onPasswordChange} value={password} />
-            <button type="submit">Submit</button>
-          </form>
-        </div>
+        <SignIn signIn={signIn} />
+        <SignUp signUp={signUp} />
         <div>
           <Typography size="b2">
             User state:

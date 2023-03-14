@@ -16,7 +16,7 @@ class Application extends React.Component<any, IState> {
     super(props);
 
     this.state = {
-      auth: Boolean(store.getState().user.access_token),
+      auth: Boolean(store.getState().user.accessToken),
       subscription: null,
     };
 
@@ -29,7 +29,7 @@ class Application extends React.Component<any, IState> {
 
   authHandler() {
     const subscription = store.subscribe(() => {
-      const current = store.getState().user.access_token;
+      const current = store.getState().user.accessToken;
 
       if (Boolean(current) !== this.state.auth) {
         this.setState({ auth: Boolean(current) });

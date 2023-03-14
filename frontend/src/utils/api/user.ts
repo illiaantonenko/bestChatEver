@@ -7,13 +7,13 @@ const API_URL = process.env.REACT_APP_API_URL;
 const User = {
   signIn: new API<TYPES.IUserTokenResponse, TYPES.IUserAuthoriseRequest>(
     'POST',
-    `${API_URL}/auth/login`,
+    `${API_URL}/auth/signin`,
     'application/json',
   ),
 
   signUp: new API<TYPES.IUserTokenResponse, TYPES.IUserCreateRequest>(
     'POST',
-    `${API_URL}/auth/register`,
+    `${API_URL}/auth/signup`,
     'application/json',
   ),
 
