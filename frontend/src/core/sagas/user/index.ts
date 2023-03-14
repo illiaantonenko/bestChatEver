@@ -31,6 +31,8 @@ function* signUp(action: TYPES.IUserSignUpRequestAction): Generator<StrictEffect
     } else {
       throw new Error('Oooopsie, type guard needed');
     }
+
+    yield put(ACTIONS.getUser());
   } catch (error) {
     console.error(error)
   }
@@ -39,7 +41,7 @@ function* signUp(action: TYPES.IUserSignUpRequestAction): Generator<StrictEffect
 function* getCurrentUser(action: TYPES.IUserGetAction): Generator<StrictEffect, void, any> {
   try {
     const state: IAppState = yield select()
-    const data: IResponseBody<TYPES.IFullUser> = yield call([User.getCurrentUser, User.getCurrentUser.json], { token: state.user.access_token })
+    const data: IResponseBody<TYPES.IFullUser> = yield call([User.getCurrentUser, User.getCurrentUser.json], { token: state.user.accessToken })
 
     if (data.ok) {
       yield put(ACTIONS.setUser(data.body))

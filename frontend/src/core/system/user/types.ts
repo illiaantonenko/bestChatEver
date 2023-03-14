@@ -29,20 +29,20 @@ export interface IUserAuthoriseRequest extends Pick<IUser, 'email'> {
 }
 
 export interface IUserTokenResponse {
-  access_token: string;
+  accessToken: string;
 }
 
 /**
  * Constants
  */
 
- export const USER_AUTH_REQUEST = 'USER:AUTH_REQUEST';
- export const USER_SIGNUP_REQUEST = 'USER:SIGNUP_REQUEST';
+export const USER_AUTH_REQUEST = 'USER:AUTH_REQUEST';
+export const USER_SIGNUP_REQUEST = 'USER:SIGNUP_REQUEST';
  
- export const USER_GET = 'USER:GET';
- export const USER_SET = 'USER:SET';
- export const USER_TOKEN_SET = 'USER:TOKEN_SET';
- export const USER_LOGOUT = 'USER:LOGOUT';
+export const USER_GET = 'USER:GET';
+export const USER_SET = 'USER:SET';
+export const USER_TOKEN_SET = 'USER:TOKEN_SET';
+export const USER_LOGOUT = 'USER:LOGOUT';
 
 /**
  * Actions

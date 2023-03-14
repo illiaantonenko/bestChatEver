@@ -1,7 +1,7 @@
 import * as TYPES from './types';
 
 const initialState : TYPES.IUserState = {
-  access_token: '',
+  accessToken: '',
   isFetching: false,
   createdAt: '',
   firstName: '',
@@ -17,11 +17,11 @@ const reducer = (
   switch (action.type) {
     // Set token action fired on form submission
     case TYPES.USER_TOKEN_SET: {
-      const { access_token } = action.payload;
+      const { accessToken } = action.payload;
 
       return {
         ...state,
-        access_token,
+        accessToken,
       }
     }
 
@@ -46,7 +46,7 @@ const reducer = (
     } case TYPES.USER_LOGOUT: {
       return {
         ...initialState,
-        access_token: '',
+        accessToken: '',
       };
     } default: return state;
   }
