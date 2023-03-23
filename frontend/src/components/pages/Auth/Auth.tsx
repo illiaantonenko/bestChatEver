@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Props } from '../../../containers/auth';
 import { Typography } from '../../ui';
-import { SignIn, SignUp } from '../../views'
+import { SignIn, SignUp, WSDebug } from '../../views'
 
 import * as css from './main.module.css';
 
@@ -37,6 +37,7 @@ class AuthPage extends React.Component<Props, IState> {
             {JSON.stringify(user)}
           </Typography>
         </div>
+        <WSDebug socketUrl="wss://ws.postman-echo.com/raw" />
       </div>
     );
   }
