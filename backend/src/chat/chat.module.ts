@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ChatController } from './chat.controller';
 import { ChatService } from './chat.service';
 import { Message, MessageSchema } from './messages/message.schema';
@@ -7,9 +7,10 @@ import { MessageService } from './messages/message.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/user/user.schema';
 import { UserService } from 'src/user/user.service';
+import { ChatGateway } from './chat.gateway';
 
 @Module({
-  providers: [ChatService, MessageService, UserService],
+  providers: [ChatService, MessageService, UserService, ChatGateway, Logger],
   controllers: [ChatController],
   imports: [
     MongooseModule.forFeature([
