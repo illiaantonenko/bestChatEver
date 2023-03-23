@@ -6,7 +6,7 @@ interface IWSDebugProps {
 }
 
 interface IWSDebugState {
-  messageList: MessageEvent['data'][]
+  messageList: MessageEvent<string>['data'][]
   messageInputValue: string
 
   socket?: WebSocket
@@ -41,7 +41,7 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
 
 
   componentDidUpdate(prevProps: Readonly<IWSDebugProps>, prevState: Readonly<IWSDebugState>, snapshot?: any): void {
-    if (!prevState.socket && this.state.socket) {
+    if (prevState.socket !== this.state.socket) {
       this.socketSetupHandlers()
     }
   }
@@ -65,17 +65,34 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
       console.error('Error occured in socket connection: ', e)
     })
 
+    socket.addEventListener('message', (e) => {
+      console.log('On message event: ', e)
+    })
+
     socket.addEventListener('message', this.socketOnMessageHandler)
   }
 
-  socketOnMessageHandler = (e: MessageEvent) => {
+  messageListUpate = (message: string) => {
     const { messageList: oldList } = this.state
 
-    console.log('Received message: ', e)
-
     this.setState({
-      messageList: [...oldList, e.data]
+      messageList: [...oldList, message]
     })
+  }
+
+  socketOnMessageHandler = (e: MessageEvent<string>) => {
+    this.messageListUpate(`Server message: ${e.data}`)
+  }
+
+  // Cleanup on unmount
+  componentWillUnmount(): void {
+    const { socket } = this.state
+
+    if (socket) {
+      socket.removeEventListener('message', this.socketOnMessageHandler)
+
+      socket.close()
+    }
   }
 
   onMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,6 +134,7 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
     // Send message
     // ** If is needed for dumb TS to work
     if (socket) {
+      this.messageListUpate(`Your message: ${messageInputValue}`)
       socket.send(messageInputValue)
 
       this.setState({
@@ -127,8 +145,8 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
 
   render() {
     const { messageList, messageInputValue } = this.state
-    const mappedMessages: JSX.Element[] = messageList.map(message => (
-      <Typography size="b1">
+    const mappedMessages: JSX.Element[] = messageList.map((message, index) => (
+      <Typography size="b1" key={index}>
         {message}
       </Typography>
     ))
