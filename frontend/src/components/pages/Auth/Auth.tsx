@@ -37,7 +37,7 @@ class AuthPage extends React.Component<Props, IState> {
             {JSON.stringify(user)}
           </Typography>
         </div>
-        <WSDebug socketUrl="wss://ws.postman-echo.com/raw" />
+        <WSDebug socketUrl="ws://localhost:5001" />
       </div>
     );
   }

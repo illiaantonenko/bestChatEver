@@ -8,6 +8,7 @@ interface IWSDebugProps {
 interface IWSDebugState {
   messageList: MessageEvent<string>['data'][]
   messageInputValue: string
+  namespaceInputValue: string
 
   socket?: WebSocket
   error?: string
@@ -21,6 +22,7 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
     this.state = {
       socket: undefined,
       messageInputValue: '',
+      namespaceInputValue: '',
       messageList: [],
     }
   }
@@ -95,6 +97,15 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
     }
   }
 
+  onNamespaceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      namespaceInputValue: e.target.value,
+
+      // Resetting error
+      error: undefined,
+    })
+  }
+
   onMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       messageInputValue: e.target.value,
@@ -108,12 +119,17 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
     e.preventDefault()
 
     // Validate string
-    const { messageInputValue, socket } = this.state
+    const { messageInputValue, namespaceInputValue, socket } = this.state
     let error
 
     switch (true) {
       case (!socket): {
         error = 'Socket is not yet initialized to send data'
+        break
+      }
+
+      case (!namespaceInputValue): {
+        error = 'No namespace defined'
         break
       }
 
@@ -134,8 +150,13 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
     // Send message
     // ** If is needed for dumb TS to work
     if (socket) {
+      const sendObject = {
+        event: namespaceInputValue,
+        data: messageInputValue,
+      }
+
       this.messageListUpate(`Your message: ${messageInputValue}`)
-      socket.send(messageInputValue)
+      socket.send(JSON.stringify(sendObject))
 
       this.setState({
         messageInputValue: '',
@@ -144,7 +165,7 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
   }
 
   render() {
-    const { messageList, messageInputValue } = this.state
+    const { messageList, messageInputValue, namespaceInputValue, error } = this.state
     const mappedMessages: JSX.Element[] = messageList.map((message, index) => (
       <Typography size="b1" key={index}>
         {message}
@@ -156,9 +177,13 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
         <hr/>
         <Typography size="h6">Type something to send a message</Typography>
         <form onSubmit={this.onMessageFormSubmit}>
-          <input type="text" onChange={this.onMessageChange} value={messageInputValue} placeholder="Type what you want to send" />
+          <input type="text" name="namespace" onChange={this.onNamespaceChange} value={namespaceInputValue} placeholder="Event namespace" />
+          <input type="text" name="message" onChange={this.onMessageChange} value={messageInputValue} placeholder="Type what you want to send" />
           <button type="submit">Send</button>
         </form>
+        {error && (
+          <Typography size="c2">{error}</Typography>
+        )}
         <hr/>
         {mappedMessages}
       </div>
