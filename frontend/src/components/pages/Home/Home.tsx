@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { Props } from '../../../containers/main';
 import { Typography } from '../../ui';
+import { WSDebug } from '../../views';
 
 class HomePage extends React.Component<Props> {
   constructor(props: Props) {
@@ -9,6 +10,8 @@ class HomePage extends React.Component<Props> {
   }
 
   render() {
+    const { user } = this.props
+
     return (
       <div>
         <Typography size="b1">
@@ -17,6 +20,7 @@ class HomePage extends React.Component<Props> {
         <Typography size="b2">
           Authorised user: {JSON.stringify(this.props.user)}
         </Typography>
+        <WSDebug socketUrl="ws://localhost:5001" user={user} />
       </div>
     );
   }

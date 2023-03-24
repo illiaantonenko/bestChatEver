@@ -7,7 +7,7 @@ import { IAppState } from '../../core/store';
 import { HomePage } from '../../components/pages';
 
 interface IStateProps {
-  user: USER.TYPES.IUser;
+  user: USER.TYPES.IUserState;
 }
 
 interface IDispatchProps {
