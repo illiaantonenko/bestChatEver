@@ -148,6 +148,11 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
         break
       }
 
+      case (!chatInputValue): {
+        error = 'Chat identifier is not defined'
+        break
+      }
+
       case (!messageInputValue): {
         error = 'Unable to send blank value'
         break
