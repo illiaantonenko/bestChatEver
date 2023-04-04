@@ -1,3 +1,5 @@
+import { Reducer } from 'redux'
+
 import * as TYPES from './types';
 
 const initialState : TYPES.IUserState = {
@@ -10,9 +12,9 @@ const initialState : TYPES.IUserState = {
   _id: '',
 };
 
-const reducer = (
-  state: TYPES.IUserState = initialState,
-  action: TYPES.UserActionTypes,
+const reducer: Reducer<TYPES.IUserState, TYPES.UserActionTypes> = (
+  state = initialState,
+  action,
 ) : TYPES.IUserState => {
   switch (action.type) {
     // Set token action fired on form submission
