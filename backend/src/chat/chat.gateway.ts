@@ -14,13 +14,22 @@ import {
 import { Socket } from 'dgram';
 import ws from 'ws';
 
-@WebSocketGateway(5001)
+@WebSocketGateway(5001) //{ path: '/chat' }
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: ws.Server;
 
-  constructor(private readonly logger: Logger) {}
-  public handleConnection() {
+  constructor(private readonly logger: Logger) {
+    // console.log(this.cons);
+    logger.log(
+      `${ChatGateway.name} opened on port 5001`,
+      'WebSocketsController',
+    );
+  }
+
+  public handleConnection(_client: Socket) {
+    // _client.userId = 123;
+    //todo: handle auth of user
     this.logger.log('Connected');
   }
 
@@ -31,12 +40,16 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @SubscribeMessage('newMessage')
   onNewMessage(
     @MessageBody() body,
-    @ConnectedSocket() client: Socket,
-  ): WsResponse<object> {
+    // @ConnectedSocket() _client: Socket,
+  ): WsResponse<any> {
     const event = 'newMessage';
-    const data = { message: 'server response' };
+
+    // console.log(_client.userId);
     console.log(body);
-    client.emit('newMessage', { message: 'random responce' });
-    return { event, data };
+
+    this.server.clients.forEach((client: Socket) => {
+      client.send(JSON.stringify(body));
+    });
+    return { event, data: body };
   }
 }
