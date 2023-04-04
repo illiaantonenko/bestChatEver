@@ -1,14 +1,19 @@
 import * as React from 'react'
-import { Typography } from '../../ui';
+
+import * as USER from '../../../core/system/user'
+
+import { Typography } from '../../ui'
 
 interface IWSDebugProps {
-  socketUrl: string;
+  socketUrl: string
+  user: USER.TYPES.IFullUser
 }
 
 interface IWSDebugState {
   messageList: MessageEvent<string>['data'][]
   messageInputValue: string
   namespaceInputValue: string
+  chatInputValue: string
 
   socket?: WebSocket
   error?: string
@@ -23,6 +28,7 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
       socket: undefined,
       messageInputValue: '',
       namespaceInputValue: '',
+      chatInputValue: '',
       messageList: [],
     }
   }
@@ -106,6 +112,15 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
     })
   }
 
+  onChatChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      chatInputValue: e.target.value,
+
+      // Resetting error
+      error: undefined,
+    })
+  }
+
   onMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       messageInputValue: e.target.value,
@@ -119,7 +134,7 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
     e.preventDefault()
 
     // Validate string
-    const { messageInputValue, namespaceInputValue, socket } = this.state
+    const { messageInputValue, namespaceInputValue, chatInputValue, socket } = this.state
     let error
 
     switch (true) {
@@ -130,6 +145,11 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
 
       case (!namespaceInputValue): {
         error = 'No namespace defined'
+        break
+      }
+
+      case (!chatInputValue): {
+        error = 'Chat identifier is not defined'
         break
       }
 
@@ -149,10 +169,16 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
 
     // Send message
     // ** If is needed for dumb TS to work
+
+    const { user } = this.props
     if (socket) {
       const sendObject = {
         event: namespaceInputValue,
-        data: messageInputValue,
+        data: {
+          body: messageInputValue,
+          chat: chatInputValue,
+          author: user._id,
+        },
       }
 
       this.messageListUpate(`Your message: ${messageInputValue}`)
@@ -165,7 +191,7 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
   }
 
   render() {
-    const { messageList, messageInputValue, namespaceInputValue, error } = this.state
+    const { messageList, messageInputValue, namespaceInputValue, chatInputValue, error } = this.state
     const mappedMessages: JSX.Element[] = messageList.map((message, index) => (
       <Typography size="b1" key={index}>
         {message}
@@ -178,6 +204,9 @@ class WSDebug extends React.Component<IWSDebugProps, IWSDebugState> {
         <Typography size="h6">Type something to send a message</Typography>
         <form onSubmit={this.onMessageFormSubmit}>
           <input type="text" name="namespace" onChange={this.onNamespaceChange} value={namespaceInputValue} placeholder="Event namespace" />
+          <br/>
+          <input type="text" name="chat" onChange={this.onChatChange} value={chatInputValue} placeholder="Chat ID" />
+          <br/>
           <input type="text" name="message" onChange={this.onMessageChange} value={messageInputValue} placeholder="Type what you want to send" />
           <button type="submit">Send</button>
         </form>
