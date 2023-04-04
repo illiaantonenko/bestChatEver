@@ -70,6 +70,7 @@ const reducer: Reducer<TYPES.IChatListState, TYPES.ChatActionTypes> = (
       return {
         ...state,
         list,
+        isFetching: false,
       }
     }
 

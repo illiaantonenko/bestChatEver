@@ -12,7 +12,7 @@ function* getChatList (action: TYPES.IChatGetListRequestAction) {
     const data: IResponseBody<TYPES.IChatGetListResponse> = yield call(Chat.getChatList.json, { token: state.user.accessToken })
 
     if (data.ok) {
-      yield put(ACTIONS.chatSetList(data.body.chatList))
+      yield put(ACTIONS.chatSetList(data.body))
     } else {
       throw new Error('Oooopsie, type guard needed');
     }
