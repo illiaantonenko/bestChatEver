@@ -15,7 +15,11 @@ export class ChatController {
 
   @Get()
   async allChats(): Promise<Chat[]> {
-    return this.chatService.findAll();
+    const chatList = await this.chatService
+      .findAll()
+      .populate('participantList')
+      .exec();
+    return this.chatService.addLastMessage(chatList);
   }
 
   @Get(':id')
@@ -24,12 +28,12 @@ export class ChatController {
   }
 
   @Post('create')
-  async createRoom(@Body() partisipants: ObjectId[]) {
-    return this.chatService.create(partisipants);
+  async createRoom(@Body('participantList') participantList: ObjectId[]) {
+    return this.chatService.create(participantList);
   }
 
   @Post('send')
-  async sendMessage(@Body() createMessageDto: CreateMessageDto) {
+  async sendMessage(@Body('message') createMessageDto: CreateMessageDto) {
     return this.messageService.create(createMessageDto);
   }
 }
