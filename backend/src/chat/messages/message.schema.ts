@@ -15,6 +15,9 @@ export class Message {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Chat', required: true })
   chat: Chat;
 
+  @Prop({ default: false })
+  isRead: boolean;
+
   @Prop({ default: Date.now })
   createdAt: Date;
 }
