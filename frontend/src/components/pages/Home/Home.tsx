@@ -9,6 +9,12 @@ class HomePage extends React.Component<Props> {
     super(props);
   }
 
+  componentDidMount(): void {
+    const { getChatList } = this.props;
+
+    getChatList();
+  }
+
   render() {
     const { user } = this.props
 

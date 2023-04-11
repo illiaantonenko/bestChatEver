@@ -57,7 +57,7 @@ export default class APIController<T = {}, R = {}> {
     this.requestTimeout = requestTimeout || 15000;
   }
 
-  configureHeaders(token?: string): Headers {
+  configureHeaders = (token?: string): Headers => {
     const headers = new Headers();
 
     // set content type of respond
@@ -73,13 +73,11 @@ export default class APIController<T = {}, R = {}> {
     return headers;
   }
 
-  async requestResource(params: IRequestParams<R> = {}): Promise<Response> {
+  requestResource = async (params: IRequestParams<R> = {}): Promise<Response> => {
     const { token, body, query } = params;
     const preparedBody = body ? JSON.stringify(body) : undefined;
     const headers = this.configureHeaders(token);
     let url = this.url;
-
-    console.log(params, headers)
 
     if (query) {
       const keys: string[] = Object.keys(query);
@@ -110,7 +108,7 @@ export default class APIController<T = {}, R = {}> {
     return Promise.race(promises);
   }
 
-  async json(params: IRequestParams<R>): Promise<IResponseBody<T>> {
+  json = async (params: IRequestParams<R>): Promise<IResponseBody<T>> => {
     const responce = await this.requestResource(params);
     const json = await responce.json();
 
@@ -121,7 +119,7 @@ export default class APIController<T = {}, R = {}> {
     };
   }
 
-  async text(params: IRequestParams<R>): Promise<IResponseBody<string>> {
+  text = async (params: IRequestParams<R>): Promise<IResponseBody<string>> => {
     const responce = await this.requestResource(params);
     const text = await responce.text();
 
@@ -132,7 +130,7 @@ export default class APIController<T = {}, R = {}> {
     };
   }
 
-  async buffer(params: IRequestParams<R>): Promise<IResponseBody<ArrayBuffer>> {
+  buffer = async (params: IRequestParams<R>): Promise<IResponseBody<ArrayBuffer>> => {
     const responce = await this.requestResource(params);
     const buffer = await responce.arrayBuffer();
 
@@ -143,7 +141,7 @@ export default class APIController<T = {}, R = {}> {
     };
   }
 
-  async empty(params: IRequestParams<R>): Promise<Omit<IResponseBody<T>, 'body'>> {
+  empty = async (params: IRequestParams<R>): Promise<Omit<IResponseBody<T>, 'body'>> => {
     const responce = await this.requestResource(params);
 
     return {
@@ -152,7 +150,7 @@ export default class APIController<T = {}, R = {}> {
     };
   }
 
-  async send(params: IRequestParams<R>): Promise<IResponseBody<T | string>> {
+  send = async (params: IRequestParams<R>): Promise<IResponseBody<T | string>> => {
     switch (this.contentType) {
       case 'text/plain':
         return this.text(params);
