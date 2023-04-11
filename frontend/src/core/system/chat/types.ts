@@ -3,10 +3,6 @@ import { Action } from "redux"
 /**
  * Constants
  */
-
-// get chatList
-// create chat
-// get chat
 export const CHAT_GET_LIST_REQUEST = 'CHAT:GET_LIST:REQUEST'
 export const CHAT_GET_REQUEST = 'CHAT:GET:REQUEST'
 export const CHAT_CREATE_REQUEST = 'CHAT:CREATE:REQUEST'
@@ -17,7 +13,6 @@ export const CHAT_SET = 'CHAT:SET'
 /**
  * Interfaces
  */
-
 export interface IChat {
   _id: string
   participantList: string[]
@@ -96,5 +91,4 @@ export interface IChatSetAction extends Action<typeof CHAT_SET> {
 /**
  * Global exported types
  */
-
 export type ChatActionTypes = IChatGetListRequestAction | IChatGetRequestAction | IChatCreateRequestAction | IChatSetListAction | IChatSetAction
